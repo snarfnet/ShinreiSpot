@@ -33,7 +33,7 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Theme.bg.ignoresSafeArea()
+            RadarBackground()
 
             VStack(spacing: 0) {
                 header
@@ -46,40 +46,37 @@ struct ContentView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
         }
-        .onAppear {
-            locationManager.requestPermission()
-        }
+        .onAppear { locationManager.requestPermission() }
         .sheet(item: $selectedSpot) { spot in
             DetailSheet(spot: spot, locationManager: locationManager)
+        }
+        .safeAreaInset(edge: .bottom) {
+            AdMobBannerView(adUnitID: AdMobConfig.bannerAdUnitID)
+                .background(.black.opacity(0.82))
         }
         .preferredColorScheme(.dark)
     }
 
     private var header: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 10) {
             HStack {
-                Image(systemName: "antenna.radiowaves.left.and.right")
-                    .font(.system(size: 24))
-                    .foregroundStyle(Theme.red)
-                    .symbolEffect(.pulse)
-                Text("心霊レーダー")
-                    .font(.system(size: 32, weight: .black))
+                Label("心霊レーダー", systemImage: "antenna.radiowaves.left.and.right")
+                    .font(.system(size: 30, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                 Spacer()
                 tabToggle
             }
-            .padding(.horizontal, 16)
-            .padding(.top, 8)
 
             TextField("スポット名・都道府県で検索", text: $searchText)
                 .textInputAutocapitalization(.never)
                 .disableAutocorrection(true)
-                .padding(12)
-                .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
-                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Theme.red.opacity(0.3)))
+                .padding(13)
+                .background(.white.opacity(0.09), in: RoundedRectangle(cornerRadius: 14))
+                .overlay(RoundedRectangle(cornerRadius: 14).stroke(Theme.red.opacity(0.42)))
                 .foregroundStyle(.white)
-                .padding(.horizontal, 16)
         }
+        .padding(.horizontal, 16)
+        .padding(.top, 12)
         .padding(.bottom, 8)
     }
 
@@ -88,7 +85,7 @@ struct ContentView: View {
             tabButton(icon: "list.bullet", index: 0)
             tabButton(icon: "map", index: 1)
         }
-        .background(Color.white.opacity(0.08), in: Capsule())
+        .background(.white.opacity(0.10), in: Capsule())
     }
 
     private func tabButton(icon: String, index: Int) -> some View {
@@ -97,9 +94,9 @@ struct ContentView: View {
         } label: {
             Image(systemName: icon)
                 .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(selectedTab == index ? .white : .white.opacity(0.4))
-                .frame(width: 40, height: 34)
-                .background(selectedTab == index ? Theme.red.opacity(0.6) : .clear, in: Capsule())
+                .foregroundStyle(selectedTab == index ? .white : .white.opacity(0.45))
+                .frame(width: 42, height: 36)
+                .background(selectedTab == index ? Theme.red.opacity(0.72) : .clear, in: Capsule())
         }
     }
 
@@ -112,15 +109,15 @@ struct ContentView: View {
                     } label: {
                         Text(cat)
                             .font(.system(size: 14, weight: .bold))
-                            .foregroundStyle(selectedCategory == cat ? .white : .white.opacity(0.5))
+                            .foregroundStyle(selectedCategory == cat ? .white : .white.opacity(0.58))
                             .padding(.horizontal, 14)
-                            .padding(.vertical, 7)
-                            .background(selectedCategory == cat ? Theme.red.opacity(0.5) : Color.white.opacity(0.06), in: Capsule())
+                            .padding(.vertical, 8)
+                            .background(selectedCategory == cat ? Theme.red.opacity(0.62) : .white.opacity(0.08), in: Capsule())
                     }
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.vertical, 6)
+            .padding(.vertical, 7)
         }
     }
 
@@ -147,8 +144,8 @@ struct ContentView: View {
                     } label: {
                         ZStack {
                             Circle()
-                                .fill(Theme.red.opacity(0.8))
-                                .frame(width: 32, height: 32)
+                                .fill(Theme.red.opacity(0.86))
+                                .frame(width: 34, height: 34)
                             Text("\(spot.level)")
                                 .font(.system(size: 14, weight: .black))
                                 .foregroundStyle(.white)
@@ -158,13 +155,12 @@ struct ContentView: View {
             }
         }
         .mapStyle(.imagery(elevation: .realistic))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: 18))
         .padding(.horizontal, 16)
         .padding(.top, 8)
+        .padding(.bottom, 20)
     }
 }
-
-// MARK: - Spot Row
 
 private struct SpotRow: View {
     let spot: HauntedSpot
@@ -173,52 +169,51 @@ private struct SpotRow: View {
     var body: some View {
         HStack(spacing: 14) {
             ZStack {
-                RoundedRectangle(cornerRadius: 14)
-                    .fill(Theme.red.opacity(0.15))
-                    .frame(width: 52, height: 52)
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(Theme.red.opacity(0.16))
+                    .frame(width: 54, height: 54)
                 Image(systemName: spot.categoryIcon)
                     .font(.system(size: 22))
                     .foregroundStyle(Theme.red)
             }
 
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 5) {
                 HStack {
                     Text(spot.name)
                         .font(.system(size: 17, weight: .bold))
-                        .foregroundStyle(.white)
                         .lineLimit(1)
                     Spacer()
                     Text(distance)
-                        .font(.system(size: 14, weight: .bold, design: .monospaced))
+                        .font(.system(size: 13, weight: .bold, design: .monospaced))
                         .foregroundStyle(Theme.red)
                 }
-                HStack(spacing: 6) {
+                HStack(spacing: 7) {
                     Text(spot.prefecture)
                         .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(.white.opacity(0.5))
+                        .foregroundStyle(.white.opacity(0.54))
                     Text(spot.category)
                         .font(.system(size: 12, weight: .bold))
-                        .foregroundStyle(Theme.red.opacity(0.8))
+                        .foregroundStyle(Theme.red.opacity(0.92))
                         .padding(.horizontal, 8)
-                        .padding(.vertical, 2)
-                        .background(Theme.red.opacity(0.12), in: Capsule())
+                        .padding(.vertical, 3)
+                        .background(Theme.red.opacity(0.14), in: Capsule())
                     Spacer()
                     Text(spot.levelText)
-                        .font(.system(size: 12))
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(Theme.red)
                 }
                 Text(spot.description)
                     .font(.system(size: 14))
-                    .foregroundStyle(.white.opacity(0.6))
+                    .foregroundStyle(.white.opacity(0.62))
                     .lineLimit(2)
             }
         }
+        .foregroundStyle(.white)
         .padding(14)
-        .background(Color.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Theme.red.opacity(0.12)))
+        .background(.black.opacity(0.34), in: RoundedRectangle(cornerRadius: 18))
+        .overlay(RoundedRectangle(cornerRadius: 18).stroke(Theme.red.opacity(0.18)))
     }
 }
-
-// MARK: - Detail Sheet
 
 private struct DetailSheet: View {
     let spot: HauntedSpot
@@ -227,7 +222,7 @@ private struct DetailSheet: View {
 
     var body: some View {
         ZStack {
-            Theme.bg.ignoresSafeArea()
+            Color(red: 0.04, green: 0.04, blue: 0.07).ignoresSafeArea()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
@@ -235,73 +230,67 @@ private struct DetailSheet: View {
                         Spacer()
                         Button { dismiss() } label: {
                             Image(systemName: "xmark.circle.fill")
-                                .font(.system(size: 28))
-                                .foregroundStyle(.white.opacity(0.4))
+                                .font(.system(size: 30))
+                                .foregroundStyle(.white.opacity(0.45))
                         }
                     }
 
-                    // Map
                     Map {
                         Annotation(spot.name, coordinate: spot.coordinate) {
                             Image(systemName: "mappin.circle.fill")
-                                .font(.system(size: 32))
+                                .font(.system(size: 34))
                                 .foregroundStyle(Theme.red)
                         }
                     }
-                    .frame(height: 200)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .frame(height: 210)
+                    .clipShape(RoundedRectangle(cornerRadius: 18))
 
-                    VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 9) {
                         Text(spot.name)
                             .font(.system(size: 28, weight: .black))
-                            .foregroundStyle(.white)
                         HStack(spacing: 12) {
                             Label(spot.prefecture, systemImage: "mappin")
                             Label(spot.category, systemImage: spot.categoryIcon)
                             Label(locationManager.distanceText(to: spot), systemImage: "location")
                         }
-                        .font(.system(size: 14, weight: .medium))
-                        .foregroundStyle(.white.opacity(0.6))
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.62))
                     }
 
-                    // Danger level
                     HStack(spacing: 8) {
                         Text("危険度")
                             .font(.system(size: 16, weight: .bold))
-                            .foregroundStyle(.white.opacity(0.6))
+                            .foregroundStyle(.white.opacity(0.62))
                         ForEach(0..<5) { i in
                             Image(systemName: i < spot.level ? "flame.fill" : "flame")
                                 .font(.system(size: 20))
-                                .foregroundStyle(i < spot.level ? Theme.red : .white.opacity(0.2))
+                                .foregroundStyle(i < spot.level ? Theme.red : .white.opacity(0.20))
                         }
                     }
 
                     Text(spot.description)
                         .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(.white.opacity(0.85))
+                        .foregroundStyle(.white.opacity(0.84))
                         .lineSpacing(6)
 
-                    // Open in Maps
                     Button {
                         let item = MKMapItem(placemark: MKPlacemark(coordinate: spot.coordinate))
                         item.name = spot.name
                         item.openInMaps()
                     } label: {
-                        HStack {
-                            Image(systemName: "map")
-                            Text("マップで開く")
-                        }
-                        .font(.system(size: 17, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, minHeight: 52)
-                        .background(Theme.red.opacity(0.7), in: RoundedRectangle(cornerRadius: 14))
+                        Label("マップで開く", systemImage: "map")
+                            .font(.system(size: 17, weight: .bold))
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity, minHeight: 54)
+                            .background(Theme.red.opacity(0.74), in: RoundedRectangle(cornerRadius: 16))
                     }
 
-                    Text("※ 心霊スポットへの無断侵入は法律で禁止されている場合があります。敷地に入る際は所有者の許可を得てください。")
+                    Text("無断侵入は禁止です。現地では周囲の安全とルールを必ず確認してください。")
                         .font(.system(size: 13))
-                        .foregroundStyle(.white.opacity(0.35))
+                        .foregroundStyle(.white.opacity(0.38))
                         .lineSpacing(4)
                 }
+                .foregroundStyle(.white)
                 .padding(20)
             }
         }
@@ -309,9 +298,22 @@ private struct DetailSheet: View {
     }
 }
 
-// MARK: - Theme
+private struct RadarBackground: View {
+    var body: some View {
+        ZStack {
+            Theme.bg.ignoresSafeArea()
+            Image("HeroArtwork")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+                .opacity(0.42)
+            LinearGradient(colors: [.black.opacity(0.18), .black.opacity(0.86)], startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+        }
+    }
+}
 
 enum Theme {
-    static let bg = Color(red: 0.06, green: 0.06, blue: 0.10)
-    static let red = Color(red: 0.85, green: 0.15, blue: 0.20)
+    static let bg = Color(red: 0.04, green: 0.04, blue: 0.07)
+    static let red = Color(red: 0.92, green: 0.13, blue: 0.18)
 }

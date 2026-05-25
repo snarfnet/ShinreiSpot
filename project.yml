@@ -5,6 +5,11 @@ options:
     iOS: "17.0"
   xcodeVersion: "16.0"
 
+packages:
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+    from: 13.4.0
+
 settings:
   base:
     SWIFT_VERSION: "5.9"
@@ -20,6 +25,8 @@ targets:
     deploymentTarget: "17.0"
     sources:
       - ShinreiSpot
+    dependencies:
+      - package: GoogleMobileAds
     settings:
       base:
         PRODUCT_NAME: ShinreiSpot
@@ -41,8 +48,9 @@ targets:
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UIUserInterfaceStyle: Dark
+        GADApplicationIdentifier: "ca-app-pub-9404799280370656~8489838456"
         NSLocationWhenInUseUsageDescription: "近くの心霊スポットを表示するために位置情報を使用します。"
-        NSUserTrackingUsageDescription: "広告の最適化のため、トラッキングの許可をお願いしています。"
+        NSUserTrackingUsageDescription: "広告の最適化のため、トラッキングの許可をお願いします。"
         SKAdNetworkItems:
           - SKAdNetworkIdentifier: cstr6suwn9.skadnetwork
     scheme:
