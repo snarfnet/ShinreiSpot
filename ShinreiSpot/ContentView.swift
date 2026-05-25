@@ -60,7 +60,7 @@ struct ContentView: View {
     private var header: some View {
         VStack(spacing: 10) {
             HStack {
-                Label("心霊レーダー", systemImage: "antenna.radiowaves.left.and.right")
+                Label("GPS近隣心霊スポット", systemImage: "antenna.radiowaves.left.and.right")
                     .font(.system(size: 30, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                 Spacer()

@@ -37,7 +37,7 @@ targets:
     info:
       path: ShinreiSpot/Resources/Info.plist
       properties:
-        CFBundleDisplayName: "心霊レーダー"
+        CFBundleDisplayName: "GPS近隣心霊スポット"
         CFBundleShortVersionString: "$(MARKETING_VERSION)"
         CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         LSRequiresIPhoneOS: true
