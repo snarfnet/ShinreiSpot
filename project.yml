@@ -47,6 +47,9 @@ targets:
           UIColorName: ""
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
         UIUserInterfaceStyle: Dark
         GADApplicationIdentifier: "ca-app-pub-9404799280370656~8489838456"
         NSLocationWhenInUseUsageDescription: "近くの心霊スポットを表示するために位置情報を使用します。"
