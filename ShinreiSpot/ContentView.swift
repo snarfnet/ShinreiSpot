@@ -41,7 +41,8 @@ struct ContentView: View {
 
                 TabView(selection: $selectedTab) {
                     listView.tag(0)
-                    mapView.tag(1)
+                    radarView.tag(1)
+                    mapView.tag(2)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
@@ -83,7 +84,8 @@ struct ContentView: View {
     private var tabToggle: some View {
         HStack(spacing: 0) {
             tabButton(icon: "list.bullet", index: 0)
-            tabButton(icon: "map", index: 1)
+            tabButton(icon: "dot.radiowaves.left.and.right", index: 1)
+            tabButton(icon: "map", index: 2)
         }
         .background(.white.opacity(0.10), in: Capsule())
     }
@@ -133,6 +135,16 @@ struct ContentView: View {
             .padding(.top, 8)
             .padding(.bottom, 80)
         }
+    }
+
+    private var radarView: some View {
+        RadarScanView(
+            spots: filteredSpots,
+            locationManager: locationManager,
+            onSpotTap: { spot in selectedSpot = spot }
+        )
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
     }
 
     private var mapView: some View {
