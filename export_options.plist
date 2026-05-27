@@ -6,16 +6,9 @@
     <string>app-store-connect</string>
     <key>teamID</key>
     <string>83VGKGSQUH</string>
-    <key>signingStyle</key>
-    <string>manual</string>
-    <key>provisioningProfiles</key>
-    <dict>
-        <key>com.tokyonasu.shinreispot</key>
-        <string>ShinreiSpot AppStore</string>
-    </dict>
-    <key>destination</key>
-    <string>export</string>
     <key>uploadSymbols</key>
     <true/>
+    <key>destination</key>
+    <string>export</string>
 </dict>
 </plist>
