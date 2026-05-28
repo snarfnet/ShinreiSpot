@@ -61,6 +61,25 @@
       ]
     }
   },
-  "hotPaths": [],
+  "hotPaths": [
+    {
+      "path": "ShinreiSpot\\App.swift",
+      "accessCount": 1,
+      "lastAccessed": 1779947513096,
+      "type": "file"
+    },
+    {
+      "path": "ShinreiSpot\\ContentView.swift",
+      "accessCount": 1,
+      "lastAccessed": 1779947513726,
+      "type": "file"
+    },
+    {
+      "path": "ShinreiSpot\\RadarView.swift",
+      "accessCount": 1,
+      "lastAccessed": 1779947514081,
+      "type": "file"
+    }
+  ],
   "userDirectives": []
 }

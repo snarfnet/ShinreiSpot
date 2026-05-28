@@ -4,23 +4,35 @@ import GoogleMobileAds
 
 @main
 struct ShinreiSpotApp: App {
-    @Environment(\.scenePhase) private var scenePhase
-    @State private var attRequested = false
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .onAppear {
+                .task {
                     MobileAds.shared.start()
-                }
-                .onChange(of: scenePhase) { _, newPhase in
-                    if newPhase == .active && !attRequested {
-                        attRequested = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            ATTrackingManager.requestTrackingAuthorization { _ in }
-                        }
+                    try? await Task.sleep(for: .seconds(1.5))
+                    if ATTrackingManager.trackingAuthorizationStatus == .notDetermined {
+                        _ = await ATTrackingManager.requestTrackingAuthorization()
                     }
                 }
+        }
+    }
+}
+
+final class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+        true
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if ATTrackingManager.trackingAuthorizationStatus == .notDetermined {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                ATTrackingManager.requestTrackingAuthorization { _ in }
+            }
         }
     }
 }

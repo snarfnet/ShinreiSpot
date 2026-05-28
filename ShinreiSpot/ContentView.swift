@@ -3,7 +3,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var locationManager = LocationManager()
-    @State private var selectedTab = 0
+    @State private var selectedTab = 1
     @State private var selectedSpot: HauntedSpot?
     @State private var searchText = ""
     @State private var selectedCategory = "すべて"
@@ -61,7 +61,7 @@ struct ContentView: View {
     private var header: some View {
         VStack(spacing: 10) {
             HStack {
-                Label("GPS近隣心霊スポット", systemImage: "antenna.radiowaves.left.and.right")
+                Label("GPS心霊スポットレーダー", systemImage: "antenna.radiowaves.left.and.right")
                     .font(.system(size: 30, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
                 Spacer()
@@ -83,22 +83,26 @@ struct ContentView: View {
 
     private var tabToggle: some View {
         HStack(spacing: 0) {
-            tabButton(icon: "list.bullet", index: 0)
-            tabButton(icon: "dot.radiowaves.left.and.right", index: 1)
-            tabButton(icon: "map", index: 2)
+            tabButton(icon: "list.bullet", label: "リスト", index: 0)
+            tabButton(icon: "dot.radiowaves.left.and.right", label: "レーダー", index: 1)
+            tabButton(icon: "map", label: "マップ", index: 2)
         }
-        .background(.white.opacity(0.10), in: Capsule())
+        .background(.white.opacity(0.10), in: RoundedRectangle(cornerRadius: 10))
     }
 
-    private func tabButton(icon: String, index: Int) -> some View {
+    private func tabButton(icon: String, label: String, index: Int) -> some View {
         Button {
             withAnimation { selectedTab = index }
         } label: {
-            Image(systemName: icon)
-                .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(selectedTab == index ? .white : .white.opacity(0.45))
-                .frame(width: 42, height: 36)
-                .background(selectedTab == index ? Theme.red.opacity(0.72) : .clear, in: Capsule())
+            VStack(spacing: 2) {
+                Image(systemName: icon)
+                    .font(.system(size: 14, weight: .bold))
+                Text(label)
+                    .font(.system(size: 9, weight: .bold))
+            }
+            .foregroundStyle(selectedTab == index ? .white : .white.opacity(0.45))
+            .frame(width: 56, height: 42)
+            .background(selectedTab == index ? Theme.red.opacity(0.72) : .clear, in: RoundedRectangle(cornerRadius: 8))
         }
     }
 
