@@ -10,7 +10,7 @@ struct ShinreiSpotApp: App {
         WindowGroup {
             ContentView()
                 .task {
-                    MobileAds.shared.start()
+                    await MobileAds.shared.start()
                     try? await Task.sleep(for: .seconds(1.5))
                     if ATTrackingManager.trackingAuthorizationStatus == .notDetermined {
                         _ = await ATTrackingManager.requestTrackingAuthorization()
