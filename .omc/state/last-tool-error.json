@@ -1,7 +1,7 @@
 {
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"git checkout main 2>/dev/null || git switch main && git pull origin main\",\"description\":\"Switch to main branch\"}",
-  "error": "Exit code 1\nerror: Your local changes to the following files would be overwritten by checkout:\n\tShinreiSpot/ContentView.swift\n\tproject.yml\nPlease commit your changes or stash them before you switch branches.\nAborting",
-  "timestamp": "2026-05-25T21:07:15.309Z",
+  "tool_name": "Glob",
+  "tool_input_preview": "{\"pattern\":\"**/asc_key*.p8\",\"path\":\"C:/Users/Windows\"}",
+  "error": "Ripgrep search timed out after 20 seconds. The search may have matched files but did not complete in time. Try searching a more specific path or pattern.",
+  "timestamp": "2026-05-27T13:05:54.235Z",
   "retry_count": 1
 }

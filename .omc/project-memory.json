@@ -1,0 +1,66 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779887105560,
+  "projectRoot": "C:\\Users\\Windows\\ShinreiSpot",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "scripts"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "MarketingAssets": {
+      "path": "MarketingAssets",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1779887105516,
+      "keyFiles": []
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 1,
+      "lastAccessed": 1779887105518,
+      "keyFiles": [
+        "submit_production.py"
+      ]
+    },
+    "ShinreiSpot": {
+      "path": "ShinreiSpot",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1779887105518,
+      "keyFiles": [
+        "AdMobBannerView.swift",
+        "App.swift",
+        "ContentView.swift",
+        "LocationManager.swift",
+        "RadarView.swift"
+      ]
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}
